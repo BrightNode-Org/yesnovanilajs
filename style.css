@@ -1,14 +1,11 @@
 :root {
-    --bg-base: #FFF7ED;
-    --card-bg: #FFFFFF;
-    --card-border: #FED7AA;
-    --text-color: #9A3412;
-    --yes-bg: #3B82F6;
-    --yes-border: #2563EB;
-    --yes-shadow: #1D4ED8;
-    --no-bg: #EF4444;
-    --no-border: #DC2626;
-    --no-shadow: #B91C1C;
+    --primary: #ff2a5f;
+    --primary-glow: rgba(255, 42, 95, 0.6);
+    --secondary: #ff758c;
+    --dark-bg: #0f0c29;
+    --glass-bg: rgba(20, 20, 30, 0.4);
+    --glass-border: rgba(255, 255, 255, 0.15);
+    --text-main: #ffffff;
 }
 
 * {
@@ -17,104 +14,164 @@
     padding: 0;
 }
 
+html, body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    touch-action: none; /* Strictly prevent all scroll/pan on mobile */
+}
+
 body {
-    font-family: 'Nunito', sans-serif;
-    background-color: var(--bg-base);
-    min-height: 100vh;
+    font-family: 'Outfit', sans-serif;
+    background: #0f0c29;
+    min-height: 100vh; /* fallback */
+    min-height: 100dvh;
     display: flex;
     justify-content: center;
     align-items: center;
-    overflow: hidden; /* Prevent scrolling */
-    color: var(--text-color);
-    position: relative;
-    /* Fun playful background pattern */
-    background-image: radial-gradient(#FED7AA 2px, transparent 2px);
-    background-size: 30px 30px;
+    overflow: hidden;
+    color: var(--text-main);
+    perspective: 1000px; /* For 3D Tilt effect */
 }
 
-/* Background Animated Orbs */
+/* Deep animated gradient background */
+.bg-animated {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: linear-gradient(45deg, #0f0c29, #302b63, #24243e);
+    background-size: 400% 400%;
+    animation: gradientBG 15s ease infinite;
+    z-index: 0;
+}
+
+@keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Glowing Orbs */
 .background-orbs {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
+    position: fixed;
+    width: 100%; height: 100%;
     z-index: 1;
+    pointer-events: none;
+    overflow: hidden; /* Stop orbs from creating scrollbars */
 }
 
 .orb {
     position: absolute;
     border-radius: 50%;
-    filter: blur(60px);
-    opacity: 0.5;
-    animation: float 12s infinite ease-in-out alternate;
+    filter: blur(80px);
+    opacity: 0.6;
+    animation: floatOrb 10s infinite ease-in-out alternate;
 }
 
 .orb-1 {
-    width: 450px;
-    height: 450px;
-    background: #F97316; /* Playful Orange */
-    top: -150px;
-    left: -150px;
+    width: 500px; height: 500px;
+    background: #ff2a5f;
+    top: -100px; left: -100px;
 }
-
 .orb-2 {
-    width: 400px;
-    height: 400px;
-    background: #3B82F6; /* Fun Blue */
-    bottom: -150px;
-    right: -100px;
+    width: 400px; height: 400px;
+    background: #7b2cbf;
+    bottom: -100px; right: -50px;
     animation-delay: -3s;
 }
-
 .orb-3 {
-    width: 350px;
-    height: 350px;
-    background: #FBBF24; /* Cheerful Yellow */
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    animation-delay: -6s;
+    width: 300px; height: 300px;
+    background: #ff758c;
+    top: 40%; left: 40%;
+    animation-delay: -5s;
 }
 
-@keyframes float {
+@keyframes floatOrb {
     0% { transform: translate(0, 0) scale(1); }
-    100% { transform: translate(40px, 60px) scale(1.1); }
+    100% { transform: translate(50px, 80px) scale(1.2); }
 }
 
+/* Floating Hearts Container */
+#floating-hearts-container {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    z-index: 2;
+    overflow: hidden;
+}
+
+.floating-heart {
+    position: absolute;
+    bottom: -10%;
+    color: rgba(255, 42, 95, 0.4);
+    font-size: 24px;
+    animation: floatUp linear forwards;
+    filter: drop-shadow(0 0 5px rgba(255, 42, 95, 0.5));
+}
+
+@keyframes floatUp {
+    0% { transform: translateY(0) rotate(0deg) scale(0.8); opacity: 0; }
+    10% { opacity: 1; }
+    90% { opacity: 1; }
+    100% { transform: translateY(-110vh) rotate(360deg) scale(1.2); opacity: 0; }
+}
+
+/* Main Container (Glassmorphism) */
 .container {
-    background: var(--card-bg);
-    border: 4px solid var(--card-border);
-    border-radius: 40px;
-    padding: 4rem 3rem;
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+    border-radius: 30px;
+    padding: 3rem 4rem;
     text-align: center;
-    /* Claymorphism soft 3D shadows */
-    box-shadow: 
-        15px 15px 30px rgba(249, 115, 22, 0.15),
-        -15px -15px 30px #FFFFFF,
-        inset 6px 6px 15px rgba(255, 255, 255, 0.8),
-        inset -6px -6px 15px rgba(254, 215, 170, 0.4);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5), 
+                inset 0 1px 1px rgba(255, 255, 255, 0.2);
     max-width: 90vw;
     z-index: 10;
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    animation: floating 6s ease-in-out infinite;
+    transform-style: preserve-3d;
+    transition: transform 0.1s ease-out;
 }
 
-@keyframes floating {
-    0% { transform: translateY(0px); }
-    50% { transform: translateY(-10px); }
-    100% { transform: translateY(0px); }
+.img-container {
+    position: relative;
+    width: 250px;
+    height: 250px;
+    margin: 0 auto 2rem auto;
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+    border: 1px solid rgba(255,255,255,0.1);
+}
+
+#main-gif {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.fade-img {
+    opacity: 0;
+    transform: scale(0.95);
 }
 
 h1 {
-    font-family: 'Fredoka', sans-serif;
-    font-size: 3.2rem;
+    font-family: 'Playfair Display', serif;
+    font-size: 3.5rem;
     font-weight: 700;
+    font-style: italic;
     margin-bottom: 2.5rem;
-    letter-spacing: -0.02em;
-    color: var(--text-color);
-    text-shadow: 2px 2px 0px #FED7AA;
+    color: #fff;
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+    transition: opacity 0.3s ease, transform 0.3s ease, color 0.3s ease;
+}
+
+.fade-text {
+    opacity: 0;
+    transform: translateY(10px);
 }
 
 .button-group {
@@ -122,135 +179,83 @@ h1 {
     justify-content: center;
     gap: 2rem;
     position: relative;
+    align-items: center;
+    min-height: 80px;
 }
 
 .btn {
-    font-family: 'Fredoka', sans-serif;
-    font-size: 1.5rem;
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.4rem;
     font-weight: 600;
     padding: 16px 48px;
     border-radius: 50px;
     cursor: pointer;
-    /* Limit transitions so the "No" button doesn't smoothly glide but jumps */
-    transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+    border: none;
     outline: none;
     color: white;
-    text-shadow: 1px 1px 0px rgba(0,0,0,0.3);
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 .yes-btn {
-    background: var(--yes-bg);
-    border: 3px solid var(--yes-border);
-    /* 3D chunky button effect */
-    box-shadow: 
-        0 8px 0 var(--yes-shadow),
-        0 15px 20px rgba(37, 99, 235, 0.3),
-        inset 2px 2px 5px rgba(255, 255, 255, 0.4),
-        inset -2px -2px 5px rgba(0, 0, 0, 0.1);
-    transform: translateY(0);
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    box-shadow: 0 10px 25px var(--primary-glow);
+    animation: heartbeat 2s infinite;
 }
 
-.yes-btn:active {
-    transform: translateY(8px);
-    box-shadow: 
-        0 0px 0 var(--yes-shadow),
-        0 5px 10px rgba(37, 99, 235, 0.3),
-        inset 2px 2px 5px rgba(255, 255, 255, 0.4),
-        inset -2px -2px 5px rgba(0, 0, 0, 0.1);
-}
-
-.yes-btn:hover {
-    filter: brightness(1.05);
-}
-
-.no-btn {
-    background: var(--no-bg);
-    border: 3px solid var(--no-border);
-    box-shadow: 
-        0 8px 0 var(--no-shadow),
-        0 15px 20px rgba(220, 38, 38, 0.3),
-        inset 2px 2px 5px rgba(255, 255, 255, 0.4),
-        inset -2px -2px 5px rgba(0, 0, 0, 0.1);
-    transform: translateY(0);
-}
-
-.no-btn:active {
-    transform: translateY(8px);
-    box-shadow: 
-        0 0px 0 var(--no-shadow),
-        0 5px 10px rgba(220, 38, 38, 0.3),
-        inset 2px 2px 5px rgba(255, 255, 255, 0.4),
-        inset -2px -2px 5px rgba(0, 0, 0, 0.1);
-}
-
-/* Success Heart Animation */
-.heart-container {
-    margin-top: 2rem;
-    animation: scaleIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-}
-
-.heart {
-    font-size: 5rem;
-    animation: pulse 1.5s infinite;
-    display: inline-block;
-    filter: drop-shadow(0 10px 15px rgba(239, 68, 68, 0.4));
-}
-
-@keyframes scaleIn {
-    0% { transform: scale(0); opacity: 0; }
-    100% { transform: scale(1); opacity: 1; }
-}
-
-@keyframes pulse {
+@keyframes heartbeat {
     0% { transform: scale(1); }
-    15% { transform: scale(1.15); }
+    15% { transform: scale(1.05); }
     30% { transform: scale(1); }
-    45% { transform: scale(1.15); }
+    45% { transform: scale(1.05); }
     100% { transform: scale(1); }
 }
 
-/* Mobile Responsiveness */
+.yes-btn:hover {
+    box-shadow: 0 15px 35px var(--primary-glow);
+    transform: translateY(-3px) scale(1.05);
+    /* Disable heartbeat on hover so it doesn't fight transform */
+    animation: none; 
+}
+
+.no-btn {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
+
+.no-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
 @media (max-width: 768px) {
     .container {
-        padding: 3rem 1.5rem;
-        border-radius: 30px;
+        padding: 2rem 1.2rem;
+        border-radius: 20px;
         max-width: 92vw;
     }
-
+    
     h1 {
-        font-size: 2.2rem;
+        font-size: 2rem;
         margin-bottom: 2rem;
     }
-
-    .button-group {
-        gap: 1rem;
+    
+    .img-container {
+        width: 180px;
+        height: 180px;
     }
-
+    
     .btn {
-        padding: 14px 28px;
-        font-size: 1.2rem;
+        padding: 12px 24px;
+        font-size: 1.1rem;
+    }
+    
+    .button-group {
+        gap: 1.5rem;
     }
 
-    .heart {
-        font-size: 4rem;
-    }
-
-    .orb-1 {
-        width: 300px;
-        height: 300px;
-        top: -50px;
-        left: -50px;
-    }
-
-    .orb-2 {
-        width: 250px;
-        height: 250px;
-        bottom: -50px;
-        right: -50px;
-    }
-
-    .orb-3 {
-        width: 200px;
-        height: 200px;
-    }
+    /* Scale down orbs for mobile */
+    .orb-1 { width: 300px; height: 300px; top: -50px; left: -50px; }
+    .orb-2 { width: 250px; height: 250px; bottom: -50px; right: -20px; }
+    .orb-3 { width: 200px; height: 200px; }
 }
